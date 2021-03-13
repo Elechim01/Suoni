@@ -1,4 +1,4 @@
-//
+               //
 //  ContentView.swift
 //  Suoni
 //
@@ -6,11 +6,31 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
+    var conversione : Conversione = Conversione()
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Text("Suoni")
+                .font(.system(size: 30))
+                .padding()
+            List(conversione.libreria ,id: \.id){value in
+                VStack(alignment: .leading){
+                    Text("categoria:\(value.category) nome: \(value.fileName)")
+                        .padding()
+                    Button(action: {
+                        let systemsound : SystemSoundID = UInt32(value.iD!)
+                        AudioServicesPlaySystemSound(systemsound)
+                    }, label: {
+                        Text("suono : \(value.iD)")
+                            .foregroundColor(.blue)
+                    })
+                }
+            }
+            
+            
+        }
     }
 }
 
